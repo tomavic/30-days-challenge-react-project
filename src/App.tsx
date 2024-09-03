@@ -22,9 +22,16 @@ function App() {
   function handleMyInput(value: string) {
     setMyInputValue(value);
   }
+
   /**
-   * End  realtime-input project
-   ******************************/
+   * 3. Start list of items project
+   */
+  const [myList, setMyList] = useState<number[]>([]);
+
+  function updateMyList(value: countType) {
+    const newList = value === "UP" ? [...myList, Math.random().toFixed(2)] : myList.filter((item, index) => index === 1);
+    setMyList([...newList] as number[]);
+  }
 
   return (
     <>
@@ -57,7 +64,7 @@ function App() {
           </div>
         </section>
 
-        <section id="realtime-input">
+        <section id="realtime-input" className="hidden">
           <div className="sm:col-span-4">
             <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
               Username
@@ -78,6 +85,32 @@ function App() {
           </div>
 
           <div className="flex justify-center font-bold text-xl">{myInputValue}</div>
+        </section>
+
+        <section>
+          <h2>List</h2>
+
+          <div className="flex justify-center items-center gap-4">
+            <button
+              type="submit"
+              onClick={() => updateMyList("UP")}
+              className=" rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              Increase
+            </button>
+
+            <button
+              type="submit"
+              onClick={() => updateMyList("DOWN")}
+              className=" rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              Decrease
+            </button>
+          </div>
+
+          {myList.map((item) => (
+            <li>{item}</li>
+          ))}
         </section>
       </main>
     </>
